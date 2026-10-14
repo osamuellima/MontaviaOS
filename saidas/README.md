@@ -1,4 +1,4 @@
-# saidas/ — outputs gerais do FrameupOS
+# saidas/ — outputs gerais do MontaviaOS
 
 Pasta pra qualquer output que não é marketing puro (não cabe em `marketing/`).
 

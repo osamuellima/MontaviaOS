@@ -1,6 +1,6 @@
-# FrameupOS
+# MontaviaOS
 
-Esse arquivo é o núcleo de operação do FrameupOS: define como o Claude
+Esse arquivo é o núcleo de operação do MontaviaOS: define como o Claude
 carrega contexto de negócio no início de cada conversa, quando registrar
 uma correção como regra permanente, e como skills novas entram no
 sistema com o tempo. É editável — trate como configuração viva, não como

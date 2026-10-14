@@ -1,4 +1,4 @@
-# scripts/ — utilitários do FrameupOS
+# scripts/ — utilitários do MontaviaOS
 
 Scripts Node.js e Python que as skills chamam quando precisam fazer coisas fora do alcance da IA pura (gerar imagem, postar em rede social, renderizar HTML em PNG).
 
@@ -38,7 +38,7 @@ npm install playwright
 npx playwright install chromium
 ```
 
-## Como o FrameupOS lida com isso
+## Como o MontaviaOS lida com isso
 
 Quando você roda uma skill que precisa de script ausente, o Claude vai:
 

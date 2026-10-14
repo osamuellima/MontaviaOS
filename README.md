@@ -1,8 +1,8 @@
-# FrameupOS
+# MontaviaOS
 
 > Sistema operacional de negócio construído sobre o Claude Code.
 
-Instalar o FrameupOS dá pro seu negócio uma memória própria (quem você
+Instalar o MontaviaOS dá pro seu negócio uma memória própria (quem você
 é, como fala, o que é prioridade agora), uma identidade visual aplicada
 em tudo que o sistema produzir, e um conjunto de skills prontas pra
 marketing, conteúdo, anúncios e operação do dia a dia.

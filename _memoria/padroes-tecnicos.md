@@ -1,6 +1,6 @@
 # Padrões técnicos — segurança, LGPD e engenharia
 
-> Checklist permanente pra qualquer sistema/SaaS/micro-SaaS/ferramenta construído sob o FrameupOS.
+> Checklist permanente pra qualquer sistema/SaaS/micro-SaaS/ferramenta construído sob o MontaviaOS.
 > Aplicar desde o início do projeto, sem esperar o cliente/usuário pedir — não é opcional nem "se sobrar tempo".
 > Consultar junto com `_memoria/empresa.md` e `_memoria/preferencias.md` no início de qualquer sessão que envolva escrever código.
 
@@ -50,7 +50,7 @@ Qualquer sistema que lida com dado de terceiros (financeiro, cadastral, bancári
 - **Pirâmide de testes**: unitário (base, barato/rápido) → integração → E2E.
 - **Manutenção é a etapa mais longa do ciclo de vida** — código legível pensando em quem vai mexer nele meses depois (inclusive o próprio usuário).
 - **Separação de linguagem por arquivo — regra geral, não só web**: cada linguagem/tecnologia no seu próprio arquivo, nunca misturada por conveniência. HTML/CSS/JS (`.html` + `.css` + `.js`, nunca `<style>`/`<script>` inline no markup) é só o exemplo mais comum — a mesma regra vale pra qualquer combinação: SQL fora de string Python solta (usar arquivo `.sql`/migration ou ORM, não query concatenada no meio da lógica de negócio), config fora do código (`.env`/`.yaml`/`.json`, não constante mágica espalhada), template fora da lógica de renderização, shell script fora de heredoc gigante dentro de outro script. Exceção legítima: quando o próprio framework exige o formato misto por design (JSX/Tailwind em componentes React, um Artifact que precisa ser um único HTML autocontido) — aí a convenção da ferramenta vale, não essa regra. Fora dessas exceções, estrutura tem que estar clara à primeira vista, cada linguagem isolada no seu lugar.
-  **Por quê:** qualquer sistema construído sob o FrameupOS pode um dia precisar que outro desenvolvedor (não o Claude, não quem pediu o projeto) entre no código pra dar manutenção. Se ele abrir o projeto e encontrar tudo separado e previsível, entende a estrutura em minutos; se encontrar HTML/CSS/JS/SQL misturados "porque foi mais rápido assim", a entrada dele fica mais lenta e o risco de quebrar algo por não entender o que está mexendo sobe — o custo dessa bagunça é pago por quem vier depois, não por quem escreveu.
+  **Por quê:** qualquer sistema construído sob o MontaviaOS pode um dia precisar que outro desenvolvedor (não o Claude, não quem pediu o projeto) entre no código pra dar manutenção. Se ele abrir o projeto e encontrar tudo separado e previsível, entende a estrutura em minutos; se encontrar HTML/CSS/JS/SQL misturados "porque foi mais rápido assim", a entrada dele fica mais lenta e o risco de quebrar algo por não entender o que está mexendo sobe — o custo dessa bagunça é pago por quem vier depois, não por quem escreveu.
 
 ## 5. Regra geral pra qualquer dado usado num entregável
 

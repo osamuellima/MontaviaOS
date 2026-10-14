@@ -1,6 +1,6 @@
-# marketing/ — saídas do FrameupOS
+# marketing/ — saídas do MontaviaOS
 
-Tudo que as skills de marketing produzem cai aqui. Skills do FrameupOS já sabem onde salvar — você raramente precisa criar pasta manualmente.
+Tudo que as skills de marketing produzem cai aqui. Skills do MontaviaOS já sabem onde salvar — você raramente precisa criar pasta manualmente.
 
 ## Estrutura padrão
 

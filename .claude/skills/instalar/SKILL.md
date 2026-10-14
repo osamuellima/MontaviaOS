@@ -1,7 +1,7 @@
 ---
 name: instalar
 description: >
-  Configura o FrameupOS pro negócio de quem está instalando: entrevista sobre a empresa, o
+  Configura o MontaviaOS pro negócio de quem está instalando: entrevista sobre a empresa, o
   jeito de escrever, a prioridade atual e a identidade visual, e preenche `_memoria/empresa.md`,
   `_memoria/preferencias.md`, `_memoria/estrategia.md`, `identidade/design-guide.md`, além de
   inserir o perfil escolhido no `CLAUDE.md`. Use logo depois de clonar o repositório, ou quando
@@ -16,8 +16,8 @@ quem é o negócio, como ele se comunica, e onde está o atrito do dia a dia.
 
 ## Antes de começar
 
-**Nome da pasta genérico?** Se `basename "$(pwd)"` ainda for algo tipo `frameupos`,
-`frameupos-main` ou variação sem nome próprio, avisar que o ideal é a pasta levar o nome do
+**Nome da pasta genérico?** Se `basename "$(pwd)"` ainda for algo tipo `montaviaos`,
+`montaviaos-main` ou variação sem nome próprio, avisar que o ideal é a pasta levar o nome do
 negócio, e que isso será lembrado no fim da instalação. Guardar o nome atual pra usar depois.
 
 **Contexto já existe?** Checar se `_memoria/empresa.md`, `preferencias.md`, `estrategia.md` ou
