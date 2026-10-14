@@ -26,9 +26,13 @@ negócio, e que isso será lembrado no fim da instalação. Guardar o nome atual
 
 ## Passo 1 — Perfil do negócio
 
-O critério que separa as duas primeiras opções não é o tamanho da equipe — é **de onde vem a
-receita**:
+O critério que separa as quatro primeiras opções não é o tamanho da equipe — é **de onde vem a
+receita**. A quinta é um recorte por natureza de negócio, não de receita, e vem antes das
+outras na pergunta quando aplicável:
 
+0. **Distribuidora/atacado de produto físico** — compra de fábrica/fornecedor e revende pra
+   varejo (mercado, farmácia, loja), com ou sem representante comercial. Sinal: o ciclo gira em
+   torno de estoque, pedido e reposição, não em projeto ou campanha.
 1. **Marca pessoal / criador solo** — vive de audiência e/ou produto próprio (curso, ebook,
    mentoria, assinatura); o dinheiro vem de quem acompanha, não de projeto fechado com cliente.
 2. **Prestador independente** — atende cliente terceiro, organiza por projeto, mesmo sozinho e
@@ -38,7 +42,8 @@ receita**:
 4. **Empresa estruturada em setores** (marketing, comercial, financeiro etc.)
 
 Resposta ambígua ("sou só eu, mas atendo cliente") resolve pelo sinal de receita: presta
-serviço pra terceiro vai pra opção 2, mesmo sendo uma pessoa só.
+serviço pra terceiro vai pra opção 2, mesmo sendo uma pessoa só. Negócio que revende produto
+físico de terceiro pra varejo vai pra opção 0, mesmo sendo pequeno ou sem representante.
 
 A escolha decide qual arquivo de `templates/perfis/` usar.
 
@@ -48,7 +53,10 @@ Uma pergunta por vez, esperando resposta antes de seguir. Resposta vaga, pedir c
 vez só — sem insistir além disso.
 
 **Negócio**: como se chama, o que entrega numa frase simples, quem realmente paga (perfil de
-cliente real, não persona genérica), sozinho ou com equipe (e se tem, quem faz o quê).
+cliente real, não persona genérica), sozinho ou com equipe (e se tem, quem faz o quê). Perfil
+0 (distribuidora): também perguntar que categoria de produto distribui e pra que tipo de
+cliente final vende — essas duas entram em `empresa.md`; o detalhe operacional (estoque,
+representante, preço, reposição) fica pra skill `/estoque` tratar depois, não duplicar aqui.
 
 **Voz**: pedir um exemplo real e recente de escrita (legenda, email, mensagem) pra calibrar o
 tom sem chutar; o que incomoda quando alguém escreve de um certo jeito (jargão vazio, emoji
@@ -105,7 +113,10 @@ renomeada. Pasta já com nome próprio, pular esse passo.
 Confirmar que o sistema já reconhece o negócio, lembrar que `/abrir` no início de cada sessão
 carrega tudo automaticamente, e que qualquer skill relevante pode ser chamada direto. Retomar
 a tarefa repetitiva mencionada no Passo 2 como gancho pro `/mapear-rotinas`. Se o usuário
-quiser versionar o trabalho, mencionar `/salvar`.
+quiser versionar o trabalho, mencionar `/salvar`. Perfil 0 (distribuidora): mencionar também
+que `/estoque` é o próximo passo natural — ela faz a entrevista de operação (como estoque,
+pedido e preço funcionam nesse negócio específico) e a partir daí controla saldo, ruptura,
+pedido e reposição.
 
 ## Regras
 
