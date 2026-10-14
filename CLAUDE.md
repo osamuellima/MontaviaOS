@@ -20,6 +20,8 @@ e tiverem conteúdo):
 1. `_memoria/empresa.md` — quem opera esse negócio e como ele funciona
 2. `_memoria/preferencias.md` — tom de escrita e o que evitar
 3. `_memoria/estrategia.md` — o que é prioridade agora
+4. `_memoria/operacao.md`, se existir — como esse negócio controla
+   estoque, pedido e preço (perfil gravado pela skill `estoque`)
 
 Esse contexto orienta toda sugestão de abordagem, prazo ou formato daqui
 pra frente — não precisa citar que foi lido, só aplicar.

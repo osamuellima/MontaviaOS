@@ -63,15 +63,22 @@ contexto solto · `/aviso-ia` sinaliza quando um conteúdo precisa de
 aviso de uso de IA · `impeccable` cobre design/UI de produção, da
 criação à auditoria de acessibilidade e responsividade.
 
+**Distribuição e atacado** — `/estoque` controla saldo, ruptura, pedido
+de cliente, preço por cliente/representante e sugestão de reposição,
+adaptado ao jeito de operar de cada distribuidora (lote, representante,
+ponto de pedido — o que se aplicar a cada negócio).
+
 ---
 
 ## Como o sistema é organizado
 
 `_memoria/` guarda o que o Claude precisa saber antes de qualquer
 resposta: `empresa.md` (o negócio), `preferencias.md` (tom de voz),
-`estrategia.md` (prioridade atual), `padroes-tecnicos.md` (segurança,
-LGPD e engenharia — aplicado sempre que a entrega envolve código) e
-`lgpd-referencia.md` (resumo legal aplicado ao dia a dia).
+`estrategia.md` (prioridade atual), `operacao.md` (como a distribuidora
+controla estoque, pedido e preço — gravado pela skill `/estoque`),
+`padroes-tecnicos.md` (segurança, LGPD e engenharia — aplicado sempre
+que a entrega envolve código) e `lgpd-referencia.md` (resumo legal
+aplicado ao dia a dia).
 
 `identidade/` guarda a marca — cores, tipografia, logo — lida por
 qualquer skill que gera peça visual.
