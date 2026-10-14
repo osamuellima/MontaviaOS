@@ -34,9 +34,9 @@ maior pra menor), sem comprimir em uma frase só:
 > sozinho ou com equipe pequena, da mais urgente pra menos:
 >
 > **Dinheiro perdido ou deixado na mesa** — toda empresa tem vazamento que ninguém olha de
-> frente: venda que não fecha por demora, cliente que para de comprar sem ninguém notar,
-> produto parado empatando capital, preço errado há meses. O sistema ajuda a identificar onde
-> está esse dinheiro antes de otimizar qualquer outra coisa.
+> frente: venda que não fecha por demora, cliente que some sem ninguém notar, preço defasado há
+> meses, capital empatado em algo que não gira. O sistema ajuda a identificar onde está esse
+> dinheiro antes de otimizar qualquer outra coisa.
 >
 > **Consultoria empresarial** — não é só execução: o sistema também ajuda a pensar o negócio —
 > onde está o gargalo, o que priorizar agora, que decisão está sendo empurrada pra depois sem
