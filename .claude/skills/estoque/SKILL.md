@@ -89,14 +89,21 @@ abaixo do normal, ordenado por criticidade, não por ordem alfabética.
 Pedido tipo "registra um pedido do cliente Y de Z unidades do produto X": calcular o preço
 aplicável segundo o **Critério de preço** gravado no perfil (tabela única, por cliente, por
 volume), confirmar o valor antes de gravar, dar baixa no saldo em `dados/estoque.csv` e
-adicionar linha em `dados/pedidos.csv`. Se o saldo for insuficiente, avisar antes de confirmar
-— nunca gravar pedido que deixa saldo negativo sem alertar explicitamente.
+adicionar linha em `dados/pedidos.csv`. Dois avisos obrigatórios antes de confirmar, não
+depois:
+- **Saldo insuficiente** (pedido maior que o saldo atual) — nunca gravar sem alertar
+  explicitamente.
+- **Saldo que cruza o ponto de pedido** (fica positivo, mas abaixo do limite de reposição
+  configurado no perfil) — avisar que esse pedido específico já empurra o produto pra faixa de
+  ruptura, mesmo sem zerar.
 
 ## Passo 3 — Preço por cliente
 
-Pedido tipo "qual o preço de X pra esse cliente": aplicar o critério gravado no perfil. Critério
-"por cliente" sem tabela própria ainda registrada, perguntar e oferecer gravar como regra nova
-pra não perguntar de novo da próxima vez.
+Pedido tipo "qual o preço de X pra esse cliente": aplicar o critério gravado no perfil —
+tabela única, desconto por volume (pedir a quantidade se ainda não foi informada), por
+cliente específico, ou por categoria de cliente. Critério que depende de dado ainda não
+registrado (ex: "por cliente" sem tabela própria salva), perguntar e oferecer gravar como regra
+nova pra não perguntar de novo da próxima vez.
 
 ## Passo 4 — Sugestão de reposição
 
