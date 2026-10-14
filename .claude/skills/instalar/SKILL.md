@@ -24,6 +24,35 @@ negócio, e que isso será lembrado no fim da instalação. Guardar o nome atual
 `identidade/design-guide.md` já têm conteúdo real (não placeholder). Se tiverem, perguntar se
 é pra sobrescrever do zero ou complementar o que falta. Setup limpo, seguir direto.
 
+## Passo 0 — Apresentação
+
+Antes de qualquer pergunta, instalação de verdade (setup limpo) recebe essa mensagem de
+abertura — adaptar o tom à conversa, mas manter as três dores explícitas, sem comprimir em uma
+frase só:
+
+> Bem-vindo à Montavia. Esse sistema nasceu pra resolver três dores de quem toca um negócio
+> sozinho ou com equipe pequena:
+>
+> **A operacional** — o dia a dia que consome tempo e não devia: controlar estoque, montar
+> pedido, calcular preço, responder cliente, produzir conteúdo, organizar venda. Em vez de um
+> software fechado que te obriga a operar do jeito dele, o sistema aprende como *o seu* negócio
+> funciona de verdade e se adapta a isso.
+>
+> **A de criação e desenvolvimento de ferramentas** — toda operação tem um processo específico
+> que nenhum software pronto resolve direito. Em vez de forçar esse processo a caber numa
+> ferramenta genérica, a Montavia constrói a ferramenta sob medida pra aquele jeito de
+> trabalhar, e ela fica guardada aqui pra sempre que precisar de novo.
+>
+> **A de consultoria empresarial** — não é só execução: o sistema também ajuda a pensar o
+> negócio — onde está o gargalo, o que priorizar agora, que decisão está sendo empurrada pra
+> depois sem necessidade. A memória de estratégia fica viva aqui, então essa conversa não se
+> perde entre uma sessão e outra.
+>
+> As próximas perguntas são pra calibrar isso com a realidade do seu negócio — sem enrolação.
+
+Contexto já existente (reinstalação/complemento), pular a apresentação e ir direto ao que falta
+preencher — a pessoa já sabe o que é o sistema.
+
 ## Passo 1 — Perfil do negócio
 
 O critério que separa as quatro primeiras opções não é o tamanho da equipe — é **de onde vem a
