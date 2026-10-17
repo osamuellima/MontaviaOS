@@ -123,7 +123,7 @@ function film(cfg) {
   // paint frame 0 for a human opening the file (a renderer's own first seek wins)
   root.addEventListener('load', () => document.fonts.ready.then(() => { if (!seeded) seek(0); }));
 
-  const mark = (frame, type, label) => { events.push({ t: +(frame / fps).toFixed(4), frame, type, label: label == null ? '' : String(label) }); };
+  const mark = (frame, type, label, extra) => { events.push(Object.assign({ t: +(frame / fps).toFixed(4), frame, type, label: label == null ? '' : String(label) }, extra || {})); };
   const nm = e => (e.id ? '#' + e.id : e.className && typeof e.className === 'string' ? '.' + e.className.split(' ')[0] : e.tagName.toLowerCase());
 
   /* core tween: explicit from + to; completes exactly ON frame b (a==b is a hard step that has landed by frame a) */
@@ -258,7 +258,7 @@ function film(cfg) {
       const s = enter || !isO ? at : at + frames - n;               // exit fades finish together with the move
       if (k === 'blur') T.forEach(useBlur);
       if (enter) { init(T, P.p, P.fmt(ra), s); tw(T, P.p, ra, rb, s, s + n, ez, P.fmt); }
-      else tw(T, P.p, rb, ra, s, s + n, ez, P.fmt);
+      else { init(T, P.p, P.fmt(rb), s); tw(T, P.p, rb, ra, s, s + n, ez, P.fmt); }   // exit also owns frame 0 (earliest segment wins), else a later enter's `from` pose leaks back to t=0
     });
     if (o.smear) {
       const c = o.smear === true ? {} : o.smear, dx = Math.abs(away.x || 0), dy = Math.abs(away.y || 0), d = Math.max(dx, dy, 60), N = c.frames || 3;
@@ -318,7 +318,7 @@ function film(cfg) {
       const fr = ov[i].frames || (ov[i].ease ? EASE_FRAMES[ov[i].ease] : 0) || frames, ez = ov[i].ease || ease, from = pose[i], sd = Math.abs(from.x || from.y || 0);
       enter(s, { at: on[i], frames: fr, ease: ez, from, label: s.textContent,
         smear: o.smear && MECH.ax ? Object.assign({ axis: MECH.ax, px: Math.max(14, sd * .3), frames: 3 }, o.smear === true ? {} : o.smear) : null });
-      mark(on[i], 'word', s.textContent);
+      mark(on[i], 'word', s.textContent, { host: nm(host), i, n });
       const a = accOf(i);
       if (a && a.color) tw(s, 'color', a.color, getComputedStyle(s).color, on[i], on[i] + (a.frames || 20), 'softInOut');   // accent on arrival, settles to ink
     });

@@ -29,6 +29,11 @@
 //     V3 status dot             6-14 px filled circle right before a text                                                    WARN
 //     V4 zinc grey text         colour within 10 of Tailwind zinc 300/400/500/600 (#d4d4d8 #a1a1aa #71717a #52525b)            WARN
 //     V5 vibe-coded UI card     one surface (or the page) holds >= 2 of: greeting, label.value, status dot, zinc text         FAIL
+//     S1 Instagram UI safe zone  (9:16 frames only, H/W >= 1.5) readable text (>= 2% H) that stays put inside the area the Reels/Stories
+//                               UI covers: top 13 %, bottom 17.7 %, right 13 % below 58 % of the height (like/comment column).  WARN
+//                               Those are the MINIMUM figures (250 / 340 px on 1080x1920). Sources disagree (bottom 250-670 px), so text that
+//                               only enters the CONSERVATIVE zone (top 14 %, bottom 35 %, sides 6 %) is printed as a note, not a hit.
+//                               Always confirm in the app's own preview before publishing.
 //   [data-ui="captured"] marks a faithful rebuild of a captured product screen: V5 is skipped inside it (the exemption is printed).
 //
 // Output: PASS / WARN / FAIL per rule with the sample times, an element snippet and the bbox [x0,y0,x1,y1] (0-1 of the frame),
@@ -204,7 +209,7 @@ const R = [
   ['C1', 'corner/edge micro-label', 'FAIL'], ['C2', 'tracked uppercase label', 'FAIL'], ['C3', 'chapter / counter index', 'FAIL'],
   ['C4', 'production metadata (BPM/FPS/timecode/version)', 'FAIL'], ['C5', 'mono micro-label', 'WARN'], ['C6', 'header/footer bar or row', 'FAIL'],
   ['C7', 'kicker above headline', 'FAIL'], ['D1', 'deck layout (left-anchored headline block)', 'FAIL'], ['P1', 'progress bar', 'FAIL'],
-  ['T1', 'letter-typed headline', 'FAIL'], ['V1', 'greeting header', 'FAIL'], ['V2', 'label . value line', 'FAIL'],
+  ['T1', 'letter-typed headline', 'FAIL'], ['S1', 'Instagram UI safe zone (9:16 only)', 'WARN'], ['V1', 'greeting header', 'FAIL'], ['V2', 'label . value line', 'FAIL'],
   ['V3', 'status dot beside text', 'WARN'], ['V4', 'zinc-grey text', 'WARN'], ['V5', 'vibe-coded UI card (cluster)', 'FAIL'],
 ];
 const RULE = Object.fromEntries(R.map(([id, name, sev]) => [id, { id, name, sev, hits: new Map() }]));
@@ -226,6 +231,11 @@ const RX = {
   greeting: /\bgood\s+(morning|afternoon|evening)\b|\bwelcome back\b|^(hi|hey|hello)\b[^.,]{0,24}(!|\u{1F44B}|\u{1F31E}|\u2600)/iu,
   labelValue: /^[A-Za-z][A-Za-z ]{2,24}\s*[·•]\s*[$€£]?\s?\d[\d,.]*\s?[kKmMbB%]?/,
 };
+
+// Instagram Reels/Stories UI overlay, as fractions of the frame: MIN = what the UI surely covers, CONS = the conservative reading of
+// Meta's percentages as relayed by third parties (unverified; sources disagree). See layout.md section 10.
+let VERT = false;
+const SAFE = { top: 250 / 1920, bottom: 340 / 1920, right: 140 / 1080, rightFrom: 0.58 }, CONS = { top: 0.14, bottom: 0.35, side: 0.06 };
 
 function evalSample(t, A, B, hits) {
   const blocks = A.blocks, shapes = A.shapes;
@@ -249,6 +259,13 @@ function evalSample(t, A, B, hits) {
     if (b.fs <= 0.06 && (RX.counterNum.test(b.text) || RX.counterWord.test(b.text) || (b.fs <= 0.05 && RX.counterBare.test(b.text))) && !/^\s*24\s*\/\s*7\b/.test(b.text)) addHit('C3', t, b.text, d);
     if ((RX.meta.test(b.text) && b.fs <= 0.06) || (RX.ver.test(b.text) && b.fs <= 0.04)) addHit('C4', t, b.text, d);
     if (b.mono && small) addHit('C5', t, b.text, d);
+  }
+  // S1: readable text under the Instagram UI (vertical frames only); conservative-zone overlaps are a note
+  if (VERT) for (const b of blocks) {
+    if (b.fs < 0.02 || !stable(b)) continue;
+    const where = [b.y0 < SAFE.top && 'top', b.y1 > 1 - SAFE.bottom && 'bottom', b.x1 > 1 - SAFE.right && b.y1 > SAFE.rightFrom && 'right column'].filter(Boolean);
+    if (where.length) addHit('S1', t, b.text, { text: b.text, snippet: b.snip, bbox: bb(b), fs: fsPct(b), note: 'inside the area the Instagram UI covers (' + where.join(' + ') + '): move it, or confirm in the app preview' });
+    else if (b.y0 < CONS.top || b.y1 > 1 - CONS.bottom || b.x0 < CONS.side || b.x1 > 1 - CONS.side) hits.exempt.add('S1 conservative zone: "' + b.text.slice(0, 34) + '" reaches into top ' + Math.round(CONS.top * 100) + ' % / bottom ' + Math.round(CONS.bottom * 100) + ' % / sides ' + Math.round(CONS.side * 100) + ' % (fine if the app preview shows it clear; note only)');
   }
   // C6: bars / hairlines / left+right small-text rows in the outer bands
   for (const s of shapes) {
@@ -329,6 +346,7 @@ let br, exitCode = 0;
   const info = await page.eval('window.__lintInfo()');
   W = W || info.width || 1920; H = H || info.height || 1080;
   await page.setViewport(W, H, 1);
+  VERT = H / W >= 1.5;
   if (info.seek === 'none') console.error('warn: no seek mechanism found (__seek / __timelines / gsap): the page is read as a static frame');
   let dur = numOpt(opt.duration, 'duration') || info.duration;
   if (!(dur > 0)) { dur = 10; console.error('warn: duration unknown (set window.__duration or pass --duration); assuming 10 s'); }

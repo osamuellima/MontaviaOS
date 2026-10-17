@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FILM TITLE</title>
+<meta name="viewport" content="width=1080, height=1920">
+<!-- VERTICAL (9:16) starting film for Reels / Stories / Shorts / TikTok. Same contract as film.html (read its comments), at 1080x1920.
+     RUNTIME PATHS: copy this file to film/index.html and the whole runtime/ folder to film/runtime/ (paths below are ./runtime/).
+     PREVIEW THE ZONES: open the film with ?guides (node scripts/render.mjs does not, so the final render never shows them). -->
+<link rel="stylesheet" href="./runtime/fonts.css">
+<style>
+/* One accent with ONE meaning. Write it: ACCENT = ______________ */
+:root {
+  --ground: #0E1116; --ink: #F3F1EC; --ink-soft: #9A988F; --accent: #F2542D;
+  --font: "Inter", system-ui, sans-serif;
+  /* Where the Instagram Reels/Stories UI draws over your frame (1080x1920). MINIMUM = surely covered; CONSERVATIVE = the cautious
+     reading of Meta's percentages as relayed by third parties (unverified, sources disagree: bottom anywhere from 250 to 670 px).
+     Keep readable text out of MINIMUM always, and out of CONSERVATIVE when the piece has a CTA button or a long caption. Always confirm
+     in the app's own preview. scripts/lint.mjs rule S1 checks the MINIMUM zone (warn) and notes the CONSERVATIVE one. */
+  --min-top: 250px; --min-bottom: 340px; --min-right: 140px; --min-right-from: 1114px;   /* right column (like/comment/share) below y 1114 */
+  --cons-top: 270px; --cons-bottom: 670px; --cons-side: 65px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+#main { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); color: var(--ink); font-family: var(--font); font-weight: 500; }
+.scene { position: absolute; inset: 0; }              /* one .scene per beat; M.cut() swaps them with a hard cut */
+.cam { position: absolute; inset: 0; }                /* camera group inside a scene: M.camera / M.snap / M.dive / M.drift act on it */
+/* Type: size by role, set by WIDTH in vertical (layout.md section 10). Keep a ratio >= 1.25 between steps; use few sizes.
+   starting scale at 1080 wide: statement 84-108 px (8-10 % W) · long line 64 px · UI/readable object text >= 78 px on screen (0.04 H) · texture 26 px.
+   A statement is centred, at most 0.8 W wide (864 px), at most ~4 lines; break lines by hand with white-space:pre-line. The centre band y 770-1000
+   (0.40-0.52 H) is always clear of the platform UI. Text you plan to build with M.words / M.type: position:absolute, explicit font-size and line-height. */
+.tl { position: absolute; left: 90px; width: 900px; text-align: center; white-space: pre-line; }
+
+/* dev-only zone overlay, drawn only with ?guides (never in a render) */
+#guides { position: absolute; inset: 0; pointer-events: none; z-index: 9999; display: none; }
+#guides i { position: absolute; display: block; }
+#guides .min { background: rgba(255, 0, 80, .22); outline: 2px solid rgba(255, 0, 80, .8); }
+#guides .cons { background: rgba(255, 170, 0, .12); outline: 2px dashed rgba(255, 170, 0, .8); }
+</style>
+</head>
+<body>
+<div id="main">
+
+  <!-- ============ BEAT 1  HOOK  the claim, already moving on frame 0 (first 1-2 s decide whether people stay) ============
+  <section id="s1" class="scene"><div id="headline" class="tl" style="top:700px;font-size:96px;line-height:112px">Your claim\nhere.</div></section>
+  -->
+
+  <!-- ============ BEAT 2  TURN / PROOF  one object per frame, magnified by the camera, never smaller than 78 px text ============
+  <section id="s2" class="scene"><div id="cam2" class="cam"> ... </div></section>
+  -->
+
+  <!-- ============ BEAT 3  CTA  short (<= 25 % of the film), resolved hold 0.6-1.4 s, still moving on the last frame ============
+  <section id="s3" class="scene"> ... </section>
+  -->
+
+  <div id="guides">
+    <i class="min" style="left:0;top:0;width:1080px;height:250px"></i>
+    <i class="min" style="left:0;bottom:0;width:1080px;height:340px"></i>
+    <i class="min" style="right:0;top:1114px;width:140px;height:806px"></i>
+    <i class="cons" style="left:0;top:250px;width:1080px;height:20px"></i>
+    <i class="cons" style="left:0;bottom:340px;width:1080px;height:330px"></i>
+    <i class="cons" style="left:0;top:270px;width:65px;height:980px"></i>
+    <i class="cons" style="right:0;top:270px;width:65px;height:980px"></i>
+  </div>
+
+</div>
+
+<script src="./runtime/vendor/gsap.min.js"></script>
+<script src="./runtime/motion.js"></script>
+<script>
+/* SEEK CONTRACT (do not break): everything visible is a pure function of t. Author only through Motion calls (or M.tl with fromTo + immediateRender:false).
+   No setTimeout, no Math.random, no Date, no CSS animations, no gsap.set outside the build. */
+const M = Motion.film({ fps: 30, duration: 20, width: 1080, height: 1920, clock: 'smooth' });
+const ACCENT = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+if (/guides/.test(location.search)) document.getElementById('guides').style.display = 'block';
+
+/* BEAT 1  HOOK
+   M.words('#headline', { at: 2, mech: 'rise', dist: 70, gaps: [5, 4, 7], frames: 13 });
+   M.exit('#headline', { at: 52, frames: 9, ease: 'accelExit', to: { y: -60 }, hide: true });   // exit also owns frame 0 now; enter + exit on one element is safe */
+
+/* BEAT 2  see film.html for camera / type / count recipes. Text that is readable only until the camera leaves it (cards, tickets) and
+   is not replaced by an exit: tell scripts/reading.mjs with  M.mark(frame, 'readend', '#host')  so the reading-pace check is honest. */
+
+/* BEAT 3  CTA
+   M.cut(300, { hide: ['#s2'], show: ['#s3'] }); */
+
+// Before delivering:  node scripts/lint.mjs film/index.html   (G5 + S1)   node scripts/reading.mjs film/final.mp4   (words/s per sentence)
+window.__ready = Motion.loaded().then(() => { if (/selftest/.test(location.search)) Motion.selfTest(M, { samples: 24 }); });
+</script>
+</body>
+</html>

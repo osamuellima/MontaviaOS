@@ -100,13 +100,14 @@ node "$SKILL/scripts/sync.mjs" film/audio/vo.words.json --fps 30 --lead 2 --out 
 Write VO in the brand's voice (real phrasing, then cut half) at ~2.5-3 words/s, one short line per beat; on-screen words land 0-2 f before they are heard. Without VO, the picture runs on a fixed cadence and the music grid.
 
 ### 6. Build the hardest beat first (`runtime/README.md`, `references/motion.md`)
-Copy `templates/film.html` to `film/index.html` and `runtime/` to `film/runtime/`. Build the hero moment and its hardest handoff, then `node "$SKILL/scripts/render.mjs" film/index.html --still 1.2,2.4,3.1 film/stills` and look. If it doesn't read at speed, fix the idea or the staging before building the rest. Every frame stays a pure function of time; run `Motion.selfTest(M)` for zero mismatches. Use `type.md`, `transitions.md`, `ui-demo.md`, `close.md` for mechanics.
+Copy `templates/film.html` (16:9) or `templates/film-vertical.html` (9:16: Reels / Stories / Shorts, with the Instagram UI zones and a `?guides` preview) to `film/index.html` and `runtime/` to `film/runtime/`. Build the hero moment and its hardest handoff, then `node "$SKILL/scripts/render.mjs" film/index.html --still 1.2,2.4,3.1 film/stills` and look. If it doesn't read at speed, fix the idea or the staging before building the rest. Every frame stays a pure function of time; run `Motion.selfTest(M)` for zero mismatches. Use `type.md`, `transitions.md`, `ui-demo.md`, `close.md` for mechanics.
 
 ### 7. Look honestly, then fix (`references/slop.md`)
 ```bash
 node "$SKILL/scripts/render.mjs" film/index.html film/draft.mp4 --scale 0.5
 python3 "$SKILL/scripts/look.py" film/draft.mp4 --out film/look --expect <planned s>
 node "$SKILL/scripts/lint.mjs" film/index.html
+node "$SKILL/scripts/reading.mjs" film/draft.mp4        # words/s per sentence: every FAIL is a sentence people cannot read in time
 ```
 `render.mjs` also writes `draft.mp4.events.json`, which `look.py` picks up (cuts are exact). Open `look/sheet.jpg`, `mid.jpg`, `strips.jpg`; read the report. **Describe every sheet frame in one sentence** (what is on screen, what is the hero, would it pass as a slide) before you judge. Run G0-G5 (`look/gates.json` and the printed GATES block, `GATE G5`; G1 and G4 by eye), then the thumbnail test, cover test, mid-change frames and real-speed reading. Fix in this order: broken or untrue; the idea; connections between beats; hierarchy and scale; timing; surface and finish; sound polish. Two or three honest passes.
 
@@ -154,10 +155,10 @@ python3 "$SKILL/scripts/look.py" film/final.mp4 --out film/look-final --expect <
 | `taste/verdicts.md`, `taste/edits.md` | this user's reactions; before/after lessons |
 | `studies/` | two calibration strips of invented frames (a default beside a decision, in different styles); look once, borrow reasoning, never the look; `PROVENANCE.md` says where they come from |
 | `runtime/` | seek-safe GSAP runtime: `motion.js` (`README.md` is the API), `hero3d/` (Three.js hero object, `M.hero3d`), `native-ui/` (iOS phone and notification builders, `NativeUI.*`), `fonts.css`, `vendor/` |
-| `templates/film.html` | the starting film (copy it to `film/index.html`) |
+| `templates/film.html`, `templates/film-vertical.html` | the starting film, 16:9 and 9:16 (copy it to `film/index.html`) |
 | `examples/` | `demo/` (full beat set), `3d-hero/` (hero3d film), `phone/` (native-ui lock screen), `selftest/` (runtime regression page: must print PASS) |
 | `library/moments.jsonl` | 716 rule-only precedent rows read by `scripts/precedent.py` |
-| `scripts/` | `providers.sh`, `brand.mjs`, `fetch_logo.mjs`, `voice.py`, `sync.mjs`, `render.mjs`, `look.py`, `lint.mjs`, `mix.py`, `imagegen.py`, `blind_review.py`, `precedent.py` |
+| `scripts/` | `providers.sh`, `brand.mjs`, `fetch_logo.mjs`, `voice.py`, `sync.mjs`, `render.mjs`, `look.py`, `lint.mjs`, `reading.mjs`, `mix.py`, `imagegen.py`, `blind_review.py`, `precedent.py` |
 
 ## Source and ethics
 The study corpus (other companies' published films, kept outside this skill) is private study material and is not part of it: learn mechanics and timing, never ship their brand assets, copy, layouts or frames as the user's. Principles here are in our own words; the strips are original images of invented brands. Generated images are for a missing surface only, never text, logos, UI or people shown as real, and are declared in `NOTE.md`. 3D is built in the film's own renderer (hero3d), not exported from other tools. When this skill and a HyperFrames house style disagree (decoratives, ghost text, hairlines, eyebrow or progress patterns, bold headings), this skill wins.

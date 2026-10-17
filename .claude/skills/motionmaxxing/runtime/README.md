@@ -15,7 +15,8 @@ Optional layers: `runtime/hero3d/` (Three.js hero object, `M.hero3d`) and `runti
 `data-composition-id/start/duration/width/height` on `#main`. `scripts/render.mjs` drives `__seek`. Rules for your own code:
 author only through `M.*` (or `M.tl` with `fromTo` + `immediateRender:false`); never `setTimeout`, `Math.random`, `Date`, CSS animations.
 Two tweens must not overlap on the same property of the same element (e.g. `M.drift` scale and `M.press` scale on one node): put one on a parent.
-`kf`, `enter`, `snap` etc. all set the element's first value at time 0, so the page also looks right before any seek.
+`kf`, `enter`, `exit`, `snap` etc. all set the element's first value at time 0 (the EARLIEST segment on a property wins, whatever the authoring order), so the page also looks right before any seek.
+`exit` then `enter` on one element is safe: frame 0 is the exit's resting pose and the enter's `from` pose appears only from its own frame (a bug until 2026-10-17: the later enter's `from` leaked back to frame 0; regression-tested in `examples/selftest`).
 
 ## Film
 ```js
@@ -23,7 +24,9 @@ const M = Motion.film({ fps: 30, duration: 15, width: 1920, height: 1080, clock:
 M.tl; M.f(12);          // paused gsap timeline; frames -> seconds (0.4)
 M.twos(7);              // 6 (nearest even frame at or below)
 M.mark(66, 'cut', 'A to B');   // record an event; cut/show/press/enter/exit/word/type/count/snap/whip/dive auto-record
-window.__events;        // [{t, frame, type, label}] sorted by frame: place audio on these
+window.__events;        // [{t, frame, type, label}] sorted by frame: place audio on these. M.mark(frame, type, label, extra) takes optional extra fields;
+                        // word events carry { host, i, n } (the M.words() host, word index, word count): scripts/reading.mjs groups sentences by them.
+M.mark(336, 'readend', '#host');   // optional: this text stops being readable here (camera leaves a card, a cover hides it) - tells reading.mjs
 ```
 
 ## Eases (`M.ease.*`, also `Motion.ease`) - measured from 53 human-made films, f(0)=0, f(1)=1

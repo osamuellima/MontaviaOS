@@ -200,11 +200,13 @@ Allowed inversions (condition in brackets):
 - Portrait cards grow to .24-.29 W x .37-.41 H; logo mark .11 W x .10 H; sign-off name lands at .28 W and starts at 1.7 W (3.5x).
 - Empty zones become bands: top .27 H empty over the title row in M930.
 
-**9:16 (PRACTICE, not in the sample)**
-- Set em by W, not H: headline about 8-10% of W (about 4.5-5.6% H). Apply the width formula above with W = 0.5625 H.
-- Break statements to 2-3 lines of at most 0.8 W; keep the centre band at y 0.40-0.52 so platform UI (top ~0.10, bottom ~0.20) never covers it.
-- Stack instead of splitting: hero object at y .30-.40, menu/labels below at y .62-.70; icon above wordmark (M959 stacked mark).
-- Cards: fan at .55-.70 W; lockup wordmark .45-.60 W; keep the same 1-3 elements rule.
+**9:16** (not in the 53-moment sample; the rules below come from one shipped Reels, 2026-10, 1080x1920 at 30 fps, and its lint/gate fixes). Start from `templates/film-vertical.html` (`?guides` draws the zones).
+- **Type by width, few sizes, ratio >= 1.25 between steps.** What worked at 1080 wide: 108 px hook · 84 px short statement · 64 px long sentence and labels · 52 px card text (x1.5 camera = 78 px on screen) · 26 px texture. Statements centred, <= 0.8 W (864 px), <= 4 lines, broken by hand (`white-space: pre-line`). A 12-word hook at 64 px needs ~3 s readable.
+- **Readable text is >= 78 px on screen (0.04 H, gate G1)**, so a card sentence needs ~52 px of world text under a x1.5 camera (the first cut had 48 px x 1.45 = 70 px and failed by eye).
+- **Instagram UI zones.** Sources disagree (bottom 250-670 px; Meta's own page was not found, the percentages come relayed by third parties). Use two levels: MINIMUM (top 250 px, bottom 340 px, right 140 px below y 1114): no readable text there, ever (`lint.mjs` S1 warns). CONSERVATIVE (top 14 %, bottom 35 %, sides 6 %): keep text and the CTA out of it when the post has a long caption or a button; `lint.mjs` notes the overlaps. Confirm in the app's own preview before publishing. The clear area is ~950 x 980 px.
+- **The outer 14 % band rules (C1, C6) apply too**: a queue of cards cropped by the bottom edge reads as a footer list and fails G5 even though it is content. Move the camera framing up, or let the object leave the frame before it reaches the band.
+- Centre band y 770-1000 (0.40-0.52 H) is always clear of the platform UI. Stack instead of splitting: text above, hero object below, never left text + right media.
+- Cards: fan at .55-.70 W; lockup wordmark .45-.60 W; keep the same 1-3 elements rule. Reading pace: check every sentence with `scripts/reading.mjs`; the first Reels had 6.6 w/s on its fastest sentence and a 3.6 w/s film average that hid it.
 
 ---
 
